@@ -625,6 +625,8 @@ footer span { background: var(--paper); padding: 2px 8px; }
       if (a.getAttribute("href") === "#" + win) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
     });
+    var label = project ? pwTitle.textContent : (win === "about" ? "" : (document.querySelector("#" + win + " .titlebar h2") || {}).textContent);
+    document.title = label ? label + " – Varun Sunkara" : "Varun Sunkara";
     window.scrollTo(0, 0);
   }
   function open(id) {
@@ -724,5 +726,11 @@ footer span { background: var(--paper); padding: 2px 8px; }
 })();
 </script>
 
+<script>
+  // Count each window or project opened as its own page view in Google Analytics.
+  window.addEventListener("hashchange", function () {
+    gtag("event", "page_view", { page_location: location.href, page_title: document.title });
+  });
+</script>
 </body>
 </html>
